@@ -175,11 +175,12 @@ type listIdentitiesParameters struct {
 //	Responses:
 //	  200: listIdentities
 //	  default: errorGeneric
-func (h *Handler) list(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *Handler) list(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var (
 		err    error
 		params = ListIdentityParameters{
 			Expand:                       ExpandDefault,
+			IdsFilter:                    r.URL.Query()["ids"],
 			CredentialsIdentifier:        r.URL.Query().Get("credentials_identifier"),
 			CredentialsIdentifierSimilar: r.URL.Query().Get("preview_credentials_identifier_similar"),
 			ConsistencyLevel:             crdbx.ConsistencyLevelFromRequest(r),

@@ -339,6 +339,17 @@ func TestHandler(t *testing.T) {
 		}
 	})
 
+	t.Run("suite=create and batch list", func(t *testing.T) {
+		var _ identity.Identity
+		// for name, ts := range map[string]*httptest.Server{"public": publicTS, "admin": adminTS} {
+		t.Run("endpoint=admin", func(t *testing.T) {
+			_ = get(t, adminTS, "/identities", 200)
+
+			// assert.Contains(t, res.Raw, "id")
+		})
+		// }
+	})
+
 	t.Run("suite=create and update", func(t *testing.T) {
 		var i identity.Identity
 		createOidcIdentity := func(t *testing.T, identifier, accessToken, refreshToken, idToken string, encrypt bool) string {
