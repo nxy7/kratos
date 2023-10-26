@@ -523,7 +523,7 @@ func instrumentHTTPClientForEvents(ctx context.Context, httpClient *retryablehtt
 	httpClient.ResponseLogHook = func(_ retryablehttp.Logger, res *http.Response) {
 		res.Body = io.NopCloser(io.LimitReader(res.Body, 5<<20)) // read at most 5 MB from the response
 		resBody, _ := httputil.DumpResponse(res, true)
-		resBody = resBody[:min(len(resBody), 2<<10)] // truncate response body to 2 kB for event
+		resBody = resBody[:2<<10] // truncate response body to 2 kB for event
 		trace.SpanFromContext(ctx).AddEvent(events.NewWebhookDelivered(ctx, res.Request.URL, reqBody, res.StatusCode, resBody, attempt, requestID))
 	}
 }
